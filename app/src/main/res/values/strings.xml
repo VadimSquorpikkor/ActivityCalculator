@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ActivityCalculator</string>
+    <string name="calculate">Считать</string>
+    <string name="activity">Активность</string>
+</resources>
