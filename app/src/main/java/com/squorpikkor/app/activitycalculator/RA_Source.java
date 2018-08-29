@@ -24,7 +24,6 @@ public class RA_Source {
     private double halfLife;
 
 
-    SaveLoad saveLoad = new SaveLoad();
     private ActivityCalculator activityCalculator;
 
     public RA_Source() {
