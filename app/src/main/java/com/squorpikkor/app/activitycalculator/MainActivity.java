@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    //Сделать загрузку из БД не в ЛистВью, а в ЭрейЛист
+    //ЛистВью будет формироваться уже из Листа
     @Override
     public void onResume() {
         super.onResume();
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         //получаем данные из бд в виде курсора
         userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
         // определяем, какие столбцы из курсора будут выводиться в ListView
-        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR};
+        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_T_POL};
         // создаем адаптер, передаем в него курсор
         userAdapter = new SimpleCursorAdapter(this, R.layout.source_list_item,
                 userCursor, headers, new int[]{R.id.name, R.id.activity}, 0);

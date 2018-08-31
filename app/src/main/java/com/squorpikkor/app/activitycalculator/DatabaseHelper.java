@@ -11,7 +11,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // названия столбцов
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_YEAR = "year";
+    public static final String COLUMN_T_POL = "t_pol";
+    public static final String COLUMN_A0 = "a0";
+    public static final String COLUMN_A0_YEAR = "a0_year";
+    public static final String COLUMN_A0_MONTH = "a0_month";
+    public static final String COLUMN_A0_DAY = "a0_day";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA);
@@ -22,10 +26,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE users (" + COLUMN_ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME
-                + " TEXT, " + COLUMN_YEAR + " INTEGER);");
+                + " TEXT, " + COLUMN_T_POL + " INTEGER, " + COLUMN_A0 + " INTEGER, "
+                + COLUMN_A0_YEAR + " INTEGER, "
+                + COLUMN_A0_MONTH + " INTEGER, " + COLUMN_A0_DAY + " INTEGER);");
         // добавление начальных данных
         db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ", " + COLUMN_YEAR  + ") VALUES ('Том Смит', 1981);");
+                + ", " + COLUMN_T_POL + ", " + COLUMN_A0 + ", " + COLUMN_A0_YEAR
+                + ", " + COLUMN_A0_MONTH
+                + ", " + COLUMN_A0_DAY + ") VALUES ('№516', 90, 11000, 2016, 5, 15);");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,  int newVersion) {

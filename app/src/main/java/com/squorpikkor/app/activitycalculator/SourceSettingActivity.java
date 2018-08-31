@@ -58,7 +58,7 @@ public class SourceSettingActivity extends AppCompatActivity {
     public void save(View view) {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COLUMN_NAME, nameBox.getText().toString());
-        cv.put(DatabaseHelper.COLUMN_YEAR, Integer.parseInt(yearBox.getText().toString()));
+        cv.put(DatabaseHelper.COLUMN_T_POL, Integer.parseInt(yearBox.getText().toString()));
 
         if (userId > 0) {
             db.update(DatabaseHelper.TABLE, cv, DatabaseHelper.COLUMN_ID + "=" + String.valueOf(userId), null);

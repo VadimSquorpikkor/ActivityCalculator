@@ -95,15 +95,10 @@ public class RA_Source {
         return halfLife;
     }
 
-    private double days_left() {
-        GregorianCalendar povDate = new GregorianCalendar(2016,
-                Calendar.OCTOBER, 12);
-        GregorianCalendar nowDate = new GregorianCalendar();
-        return ((double) nowDate.getTimeInMillis() - (double) povDate.getTimeInMillis()) / 1000 / 60 / 60 / 24;
-    }
+
 
     public double getActivity() {
-        return activityCalculator.getActivity(getA0(), days_left(), getHalfLife());
+        return activityCalculator.getActivity(getA0(), getHalfLife());
     }
 
     //ненужный метод для стандартного лист итема
