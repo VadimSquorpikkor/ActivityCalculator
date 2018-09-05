@@ -11,6 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // названия столбцов
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
+    public static final int COLUMN_VERSION = 1;
     public static final String COLUMN_T_POL = "t_pol";
     public static final String COLUMN_A0 = "a0";
     public static final String COLUMN_A0_YEAR = "a0_year";
@@ -19,6 +20,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA);
+//        super(context,DATABASE_NAME,null, DATABASE_VERSION);
+        /*(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+            super(context,name,factory, version);*/
     }
 
     @Override

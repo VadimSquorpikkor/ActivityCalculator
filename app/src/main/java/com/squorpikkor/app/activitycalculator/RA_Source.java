@@ -96,9 +96,14 @@ public class RA_Source {
     }
 
 
-
     public double getActivity() {
         return activityCalculator.getActivity(getA0(), getHalfLife());
+    }
+
+    //В будущем этого сеттера не будет. Имя будет закрыто от изменения.
+    //Сейчас этот сеттер оставлен толька для проверки работы БД
+    public void setName(String name) {
+        this.name = name;
     }
 
     //ненужный метод для стандартного лист итема

@@ -7,6 +7,7 @@ package com.squorpikkor.app.activitycalculator;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +18,16 @@ import com.squorpikkor.app.activitycalculator.RA_Element.Cs;
 import com.squorpikkor.app.activitycalculator.RA_Element.RA_Element;
 import java.util.ArrayList;
 
+import static com.squorpikkor.app.activitycalculator.Database.TABLE_NAME;
+
 public class MainActivity extends AppCompatActivity {
+
+
+
+
+
+    /////////////////////////////////////////
+
 
     private final double A0_516 = 91.3;
     private final double A0_517 = 88.8;
@@ -28,19 +38,69 @@ public class MainActivity extends AppCompatActivity {
     private final double A0_2910 = 67.7;
 
     RA_Element cs = new Cs();
-    ActivityCalculator activityCalculator;
+//    ActivityCalculator activityCalculator;
     ListView lvMain;
     ArrayList<RA_Source> sourceList = new ArrayList<>();
     SourceAdapter sourceAdapter;
 
-    DatabaseHelper databaseHelper;
-    SQLiteDatabase db;
-    Cursor userCursor;
-    SimpleCursorAdapter userAdapter;
-    ListView userList;
+//    DatabaseHelper databaseHelper;
+//    SQLiteDatabase db;
+//    Cursor userCursor;
+//    SimpleCursorAdapter userAdapter;
+//    ListView userList;
 
+    Database database;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        database = new Database(this);
+
+        sourceList.addAll(database.getSourceList());
+//        sourceList.addAll(getSourceList());
+
+        // находим список
+        lvMain = findViewById(R.id.lvMain);
+
+        // создаем адаптер
+        sourceAdapter = new SourceAdapter(this,
+                R.layout.source_list_item, sourceList);
+
+        // присваиваем адаптер списку
+        lvMain.setAdapter(sourceAdapter);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
+    /*public ArrayList<RA_Source> getSourceList() {   //Имя не правильное, должно быть что-то типа SourceList или loadedSourceList
+        SQLiteDatabase db = database.getWritableDatabase();
+//        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+        ArrayList<RA_Source> sourceArray = new ArrayList<>();
+        RA_Source ra_source;
+        if (cursor.getCount() > 0) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                ra_source = new RA_Source();
+                ra_source.setName(cursor.getString(1));
+                //ra_source.setMagazine(cursor.getString(2));
+                sourceArray.add(ra_source);
+            }
+        }
+        cursor.close();
+        db.close();
+        return sourceArray;
+    }*/
+
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -79,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
+    }*/
 
 
     // по нажатию на кнопку запускаем UserActivity для добавления данных
@@ -88,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Сделать загрузку из БД не в ЛистВью, а в ЭрейЛист
+/*    //Сделать загрузку из БД не в ЛистВью, а в ЭрейЛист
     //ЛистВью будет формироваться уже из Листа
     @Override
     public void onResume() {
@@ -104,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         userAdapter = new SimpleCursorAdapter(this, R.layout.source_list_item,
                 userCursor, headers, new int[]{R.id.name, R.id.activity}, 0);
         userList.setAdapter(userAdapter);
-    }
+    }*/
 
 
 
@@ -112,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
     public void onDestroy(){
         super.onDestroy();
         // Закрываем подключение и курсор
-        db.close();
-        userCursor.close();
+        database.close();
+//        userCursor.close();
     }
 
 }
