@@ -14,6 +14,10 @@ public class RA_Source {
     /**Номер источника**/
     private String name;
 
+    public void setElement(String element) {
+        this.element = element;
+    }
+
     /** Химический элемент**/
     private String element;
 
@@ -23,6 +27,19 @@ public class RA_Source {
     /**Период полураспада**/
     private double halfLife;
 
+    /**Дата поверки**/
+    private String pov_date;
+
+    /**ID  для проверки только**/
+    private int id;
+
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
 
     private ActivityCalculator activityCalculator;
 
@@ -42,6 +59,17 @@ public class RA_Source {
         this.a0 = a0;
         this.halfLife = halfLife;
         activityCalculator = new ActivityCalculator();
+    }
+
+    public RA_Source(int id, String name, String element) {
+        this.id = id;
+        this.name = name;
+        this.element = element;
+    }
+
+    public RA_Source(String name, String element) {
+        this.name = name;
+        this.element = element;
     }
 
     RA_Source(String name, RA_Element ra_element, double a0) {
