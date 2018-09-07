@@ -30,8 +30,14 @@ public class RA_Source {
     /**Дата поверки**/
     private String pov_date;
 
+    /**Дата поверки**/
+    private GregorianCalendar greg_pov_date;
+
     /**ID  для проверки только**/
     private int id;
+
+    private int year, month, day;
+
 
     public int getID() {
         return id;
@@ -80,6 +86,17 @@ public class RA_Source {
         activityCalculator = new ActivityCalculator();
     }
 
+    RA_Source(String name, RA_Element ra_element, double a0, int year, int month, int day) {
+        this.name = name;
+        this.element = ra_element.getName();
+        this.a0 = a0;
+        this.halfLife = ra_element.getHalfLife();
+        activityCalculator = new ActivityCalculator();
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
+
     /**Каждый экземпляр класса сохраняет свои параметры через SaveStringArray метод,
      * именем для префНейм является имя экземпляра класса. Каждое имя хранится в Set
      * Все префНэймы беруться из этого сета и по ним загружаются экз класса
@@ -124,8 +141,13 @@ public class RA_Source {
     }
 
 
-    public double getActivity() {
+
+    /*public double getActivity() {
         return activityCalculator.getActivity(getA0(), getHalfLife());
+    }*/
+
+    public double getActivity() {
+        return activityCalculator.getActivity(getA0(), getHalfLife(), this.year, this.month, this.day);
     }
 
     //В будущем этого сеттера не будет. Имя будет закрыто от изменения.

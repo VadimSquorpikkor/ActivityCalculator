@@ -15,7 +15,7 @@ class ActivityCalculator {
         return a0 * Math.exp(-0.693 / t_pol * days_left());
     }
 
-    double getActivity(double t_pol, double a0, int year, int month, int day) {
+    double getActivity(double a0, double t_pol, int year, int month, int day) {
         return a0 * Math.exp(-0.693 / t_pol * days_left(year, month, day));
     }
 
@@ -39,4 +39,8 @@ class ActivityCalculator {
         GregorianCalendar nowDate = new GregorianCalendar();
         return ((double) nowDate.getTimeInMillis() - (double) povDate.getTimeInMillis()) / 1000 / 60 / 60 / 24;
     }
+
+    /*private GregorianCalendar dateFromString() {
+        return GregorianCalendar
+    }*/
 }

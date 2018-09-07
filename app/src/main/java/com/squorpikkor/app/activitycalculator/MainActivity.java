@@ -36,15 +36,22 @@ public class MainActivity extends AppCompatActivity {
 
         database2 = new Database2(this);
 
+        sourceList.add(new RA_Source("№516", cs, A0_516, 2016, 10, 12));
+        sourceList.add(new RA_Source("№517", cs, A0_517, 2016, 10, 12));
+        sourceList.add(new RA_Source("№518", cs, A0_518, 2016, 10, 12));
+        sourceList.add(new RA_Source("№519", cs, A0_519, 2016, 10, 12));
+        sourceList.add(new RA_Source("№520", cs, A0_520, 2016, 10, 12));
+        sourceList.add(new RA_Source("№521", cs, A0_521, 2016, 10, 12));
+        sourceList.add(new RA_Source("№2910", cs, A0_2910, 2016, 5, 17));
 
 
 //        sourceList.add(new RA_Source("#516", "Cesium"));
-        database2.addRA_Source(new RA_Source("#516", "Cesium"));
+        //database2.addRA_Source(new RA_Source("#516", "Cesium"));
 
 
 
-        sourceList.addAll(database2.getAllRA_Sources());
-//        sourceList.addAll(getSourceList());
+        //sourceList.addAll(database2.getAllRA_Sources());этот
+//        //////sourceList.addAll(getSourceList());
 
 
 

@@ -25,7 +25,8 @@ public class Database2 extends SQLiteOpenHelper implements IDatabaseHandler {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_SOURCES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
                 + KEY_ELEMENT + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
 
@@ -35,6 +36,8 @@ public class Database2 extends SQLiteOpenHelper implements IDatabaseHandler {
 
         db.insert(TABLE_SOURCES, null, contentValues);
         db.close();*/
+
+        //addRA_Source(new RA_Source());
     }
 
     @Override
