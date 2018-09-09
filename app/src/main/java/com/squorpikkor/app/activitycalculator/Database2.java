@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Database2 extends SQLiteOpenHelper implements IDatabaseHandler {
+public class Database2 extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "sourceManager";
@@ -49,24 +49,12 @@ public class Database2 extends SQLiteOpenHelper implements IDatabaseHandler {
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
-    /*@Override
-    public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_SOURCES + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY,"
-                + COLUMN_NAME + " TEXT,"
-                + COLUMN_ELEMENT + " TEXT" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
-
-    }*/
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOURCES);
-
         onCreate(db);
     }
 
-    @Override
     public void addRA_Source(RA_Source ra_source) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -81,7 +69,6 @@ public class Database2 extends SQLiteOpenHelper implements IDatabaseHandler {
         db.close();
     }
 
-    @Override
     public RA_Source getRA_Source(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -101,11 +88,9 @@ public class Database2 extends SQLiteOpenHelper implements IDatabaseHandler {
         }
 
         RA_Source ra_source = new RA_Source(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
-
         return ra_source;
     }
 
-    @Override
     public List<RA_Source> getAllRA_Sources() {
         List<RA_Source> sourceList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_SOURCES;
@@ -131,7 +116,6 @@ public class Database2 extends SQLiteOpenHelper implements IDatabaseHandler {
         return sourceList;
     }
 
-    @Override
     public int updateRA_Source(RA_Source ra_source) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -143,21 +127,18 @@ public class Database2 extends SQLiteOpenHelper implements IDatabaseHandler {
                 new String[] { String.valueOf(ra_source.getID()) });
     }
 
-    @Override
     public void deleteRA_Source(RA_Source ra_source) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SOURCES, COLUMN_ID + " = ?", new String[] { String.valueOf(ra_source.getID()) });
         db.close();
     }
 
-    @Override
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SOURCES, null, null);
         db.close();
     }
 
-    @Override
     public int getRA_SourceCount() {
         String countQuery = "SELECT  * FROM " + TABLE_SOURCES;
         SQLiteDatabase db = this.getReadableDatabase();

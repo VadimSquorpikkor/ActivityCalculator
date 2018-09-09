@@ -18,7 +18,8 @@ public class SourceSettingActivity extends AppCompatActivity {
     Button delButton;
     Button saveButton;
 
-    DatabaseHelper sqlHelper;
+//    DatabaseHelper sqlHelper;
+    Database2 database2;
     SQLiteDatabase db;
     Cursor userCursor;
     long userId = 0;
@@ -33,10 +34,10 @@ public class SourceSettingActivity extends AppCompatActivity {
         delButton = (Button) findViewById(R.id.deleteButton);
         saveButton = (Button) findViewById(R.id.saveButton);
 
-        sqlHelper = new DatabaseHelper(this);
-        db = sqlHelper.getWritableDatabase();
+        database2 = new Database2(this);
+        db = database2.getWritableDatabase();
 
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getLong("id");
         }
@@ -52,10 +53,10 @@ public class SourceSettingActivity extends AppCompatActivity {
         } else {
             // скрываем кнопку удаления
             delButton.setVisibility(View.GONE);
-        }
+        }*/
     }
 
-    public void save(View view) {
+    /*public void save(View view) {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COLUMN_NAME, nameBox.getText().toString());
         cv.put(DatabaseHelper.COLUMN_T_POL, Integer.parseInt(yearBox.getText().toString()));
@@ -66,12 +67,12 @@ public class SourceSettingActivity extends AppCompatActivity {
             db.insert(DatabaseHelper.TABLE, null, cv);
         }
         goHome();
-    }
+    }*/
 
-    public void delete(View view) {
+    /*public void delete(View view) {
         db.delete(DatabaseHelper.TABLE, "_id = ?", new String[]{String.valueOf(userId)});
         goHome();
-    }
+    }*/
 
     private void goHome() {
         // закрываем подключение
