@@ -2,7 +2,6 @@ package com.squorpikkor.app.activitycalculator;
 
 import com.squorpikkor.app.activitycalculator.RA_Element.RA_Element;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -14,8 +13,46 @@ public class RA_Source {
     /**Номер источника**/
     private String name;
 
-    public void setElement(String element) {
-        this.element = element;
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setHalfLife(double halfLife) {
+
+        this.halfLife = halfLife;
+    }
+
+    public String getPov_date() {
+        return pov_date;
+    }
+
+    public void setPov_date(String pov_date) {
+        this.pov_date = pov_date;
+    }
+
+    public void setA0(double a0) {
+
+        this.a0 = a0;
     }
 
     /** Химический элемент**/
@@ -33,8 +70,12 @@ public class RA_Source {
     /**Дата поверки**/
     private GregorianCalendar greg_pov_date;
 
-    /**ID  для проверки только**/
+    /**ID для нахождения объекта в БД и его апдейта или удаления**/
     private int id;
+
+    public void setElement(String element) {
+        this.element = element;
+    }
 
     private int year, month, day;
 
@@ -49,10 +90,14 @@ public class RA_Source {
 
     private ActivityCalculator activityCalculator;
 
+    ///Конструкторов нужно 2: для создания нового источника и для загрузки класса из БД
+
+    //Конструктор для создания пустого класса. Вызывается при нажатии кнопки "добавить источник"
+    //Возможно стоит инициализировать переменные по-умолчанию или в конструкторе или лучше
+    //в объявлении переменных в классе, БД может не правильно понять переменные без значений
     public RA_Source() {
         activityCalculator = new ActivityCalculator();
     }
-
 
     public RA_Source(String name) {
         this.name = name;
@@ -86,6 +131,7 @@ public class RA_Source {
         activityCalculator = new ActivityCalculator();
     }
 
+    //конструктор для версии без sqlite и shPref. Запускается из мейн активити
     RA_Source(String name, RA_Element ra_element, double a0, int year, int month, int day) {
         this.name = name;
         this.element = ra_element.getName();
@@ -97,32 +143,17 @@ public class RA_Source {
         this.day = day;
     }
 
-    /**Каждый экземпляр класса сохраняет свои параметры через SaveStringArray метод,
-     * именем для префНейм является имя экземпляра класса. Каждое имя хранится в Set
-     * Все префНэймы беруться из этого сета и по ним загружаются экз класса
-     * Если создать источник с уже существующим именем, метод не сможет сохранить
-     * имя в сет (такое там уже есть) метод завершиться с ошибкой и экз класса не будет сохранен
-     *
-     *
-     * А можно для имени префНейм использовать порядковый номер
-     * тогда вместо Set можно хранить только число последнего сохраненного префа (например 5)
-     * тогда при загрузке будут загружаться имена с 1 до сохраненного числа (1, 2, 3, 4, 5)
-     * Плюс подхода: при удалении останется в памяти телефона файл без доступа -- мусор(как и в случае
-     * использования имени), но при создании нового экземпляра, мусор перезапишется в полезный файл
-     * При удалении...  ...при удалении НЕ последнего префа возникнут проблемы...
-     * останется 4 префа (удален был например 2-й) загружаться будут с 1 по 4
-     *
-     *
-     * Возможно лучшим способом будет использование SQLite
-     * **/
-
-
-
-    /**Возможно есть смысл инкапсулировать save/load методы**/
-
-    /*void save() {
-        String prefName = name;
-    }*/
+    //Конструктор для загрузки РА_источника из sqlite (что то же создание источника из данных из БД)
+    RA_Source(String sourceName, String element, double a0, double halfLife, int year, int month, int day) {
+        this.name = sourceName;
+        this.element = element;
+        this.a0 = a0;
+        this.halfLife = halfLife;
+        activityCalculator = new ActivityCalculator();
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
 
     public String getName() {
         return name;
@@ -147,7 +178,7 @@ public class RA_Source {
     }*/
 
     public double getActivity() {
-        return activityCalculator.getActivity(getA0(), getHalfLife(), this.year, this.month, this.day);
+        return activityCalculator.getActivity(getA0(), getHalfLife(), year, month, day);
     }
 
     //В будущем этого сеттера не будет. Имя будет закрыто от изменения.

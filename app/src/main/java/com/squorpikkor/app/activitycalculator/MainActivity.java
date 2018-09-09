@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
 //        sourceList.add(new RA_Source("#516", "Cesium"));
         //database2.addRA_Source(new RA_Source("#516", "Cesium"));
+        database2.addRA_Source(new RA_Source());
 
 
-
-        //sourceList.addAll(database2.getAllRA_Sources());этот
+        sourceList.addAll(database2.getAllRA_Sources());//этот
 //        //////sourceList.addAll(getSourceList());
 
 
