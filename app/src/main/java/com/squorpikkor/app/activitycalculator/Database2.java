@@ -11,17 +11,17 @@ import java.util.List;
 
 public class Database2 extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "sourceManager";
-    private static final String TABLE_SOURCES = "ra_sources";
-    private static final String COLUMN_ID = "id";
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_ELEMENT = "element";
-    private static final String COLUMN_A0 = "a0";
-    private static final String COLUMN_HALF_LIFE = "half_life";
-    private static final String COLUMN_YEAR = "year";
-    private static final String COLUMN_MONTH = "month";
-    private static final String COLUMN_DAY = "day";
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "sourceManager";
+    public static final String TABLE_SOURCES = "ra_sources";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_ELEMENT = "element";
+    public static final String COLUMN_A0 = "a0";
+    public static final String COLUMN_HALF_LIFE = "half_life";
+    public static final String COLUMN_YEAR = "year";
+    public static final String COLUMN_MONTH = "month";
+    public static final String COLUMN_DAY = "day";
 
     //По поводу ID: при создании нового RA_Source ID у него ещё нет, как только создается
     //экземпляр класса, он сразу же заносится в БД. ID объекта ещё нет, в базе ID уже есть
@@ -55,6 +55,7 @@ public class Database2 extends SQLiteOpenHelper{
         onCreate(db);
     }
 
+    //TODO убрать ненужный параметр метода
     public void addRA_Source(RA_Source ra_source) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -83,11 +84,27 @@ public class Database2 extends SQLiteOpenHelper{
                 }, COLUMN_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
 
+        RA_Source ra_source = new RA_Source();
         if (cursor != null){
             cursor.moveToFirst();
+
+            ra_source.setID(Integer.parseInt(cursor.getString(0)));
+            ra_source.setName(cursor.getString(1));
+            ra_source.setElement(cursor.getString(2));
+            ra_source.setA0(Double.parseDouble(cursor.getString(3)));
+            ra_source.setHalfLife(Double.parseDouble(cursor.getString(4)));
+            ra_source.setYear(Integer.parseInt(cursor.getString(5)));
+            ra_source.setMonth(Integer.parseInt(cursor.getString(6)));
+            ra_source.setDay(Integer.parseInt(cursor.getString(7)));
         }
 
-        RA_Source ra_source = new RA_Source(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
+        /*RA_Source ra_source = new RA_Source(Integer.parseInt(
+                cursor.getString(0)),
+                cursor.getString(1),
+                cursor.getString(2));*/
+
+
+
         return ra_source;
     }
 

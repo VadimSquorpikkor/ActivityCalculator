@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import com.squorpikkor.app.activitycalculator.RA_Element.Cs;
 import com.squorpikkor.app.activitycalculator.RA_Element.RA_Element;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<RA_Source> sourceList = new ArrayList<>();
     SourceAdapter sourceAdapter;
     Database2 database2;
+    Button addNewButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +39,19 @@ public class MainActivity extends AppCompatActivity {
 
         database2 = new Database2(this);
 
-        sourceList.add(new RA_Source("№516", cs, A0_516, 2016, 10, 12));
-        sourceList.add(new RA_Source("№517", cs, A0_517, 2016, 10, 12));
-        sourceList.add(new RA_Source("№518", cs, A0_518, 2016, 10, 12));
-        sourceList.add(new RA_Source("№519", cs, A0_519, 2016, 10, 12));
-        sourceList.add(new RA_Source("№520", cs, A0_520, 2016, 10, 12));
-        sourceList.add(new RA_Source("№521", cs, A0_521, 2016, 10, 12));
-        sourceList.add(new RA_Source("№2910", cs, A0_2910, 2016, 5, 17));
+        addNewButton = findViewById(R.id.add_new_button);
 
+//        sourceList.add(new RA_Source("№516", cs, A0_516, 2016, 10, 12));
+//        sourceList.add(new RA_Source("№517", cs, A0_517, 2016, 10, 12));
+//        sourceList.add(new RA_Source("№518", cs, A0_518, 2016, 10, 12));
+//        sourceList.add(new RA_Source("№519", cs, A0_519, 2016, 10, 12));
+//        sourceList.add(new RA_Source("№520", cs, A0_520, 2016, 10, 12));
+//        sourceList.add(new RA_Source("№521", cs, A0_521, 2016, 10, 12));
+//        sourceList.add(new RA_Source("№2910", cs, A0_2910, 2016, 5, 17));
 
-//        sourceList.add(new RA_Source("#516", "Cesium"));
-        //database2.addRA_Source(new RA_Source("#516", "Cesium"));
-        database2.addRA_Source(new RA_Source());
-
+        //////////////database2.addRA_Source(new RA_Source());
 
         sourceList.addAll(database2.getAllRA_Sources());//этот
-//        //////sourceList.addAll(getSourceList());
-
-
 
         // находим список
         lvMain = findViewById(R.id.lvMain);
@@ -65,8 +63,32 @@ public class MainActivity extends AppCompatActivity {
         // присваиваем адаптер списку
         lvMain.setAdapter(sourceAdapter);
 
+        //Лисенер для элемента ListView
+        lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), SourceSettingActivity.class);
+//                intent.putExtra("id", id);
+                int pos = sourceList.get((int)id).getID();
+                intent.putExtra("id", pos);
+                startActivity(intent);
+            }
+        });
 
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.add_new_button:
+                        database2.addRA_Source(new RA_Source());
+                        sourceList.clear();
+                        sourceList.addAll(database2.getAllRA_Sources());
+                        lvMain.setAdapter(sourceAdapter);
+                }
+            }
+        };
 
+        addNewButton.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -76,12 +98,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+/*
     // по нажатию на кнопку запускаем UserActivity для добавления данных
     public void add(View view){
         Intent intent = new Intent(this, SourceSettingActivity.class);
         startActivity(intent);
-    }
+    }*/
 
 
 

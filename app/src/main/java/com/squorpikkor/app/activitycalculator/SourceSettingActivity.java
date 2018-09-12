@@ -1,78 +1,88 @@
 package com.squorpikkor.app.activitycalculator;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class SourceSettingActivity extends AppCompatActivity {
 
+    private static final String TAG = "LOGGG!!!";
 
     EditText nameBox;
+    EditText elementBox;
+    EditText a0Box;
+    EditText halfLifeBox;
     EditText yearBox;
+    EditText monthBox;
+    EditText dayBox;
+
     Button delButton;
     Button saveButton;
 
-//    DatabaseHelper sqlHelper;
     Database2 database2;
     SQLiteDatabase db;
-    Cursor userCursor;
-    long userId = 0;
+    int userId = 0;
+
+    RA_Source ra_source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_source_setting);
 
-        nameBox = (EditText) findViewById(R.id.name);
-        yearBox = (EditText) findViewById(R.id.year);
-        delButton = (Button) findViewById(R.id.deleteButton);
-        saveButton = (Button) findViewById(R.id.saveButton);
+        nameBox = findViewById(R.id.name);
+        elementBox = findViewById(R.id.element);
+        a0Box = findViewById(R.id.a0);
+        halfLifeBox = findViewById(R.id.half_life);
+        yearBox = findViewById(R.id.year);
+        monthBox = findViewById(R.id.month);
+        dayBox = findViewById(R.id.day);
+
+        delButton = findViewById(R.id.deleteButton);
+        saveButton = findViewById(R.id.saveButton);
 
         database2 = new Database2(this);
         db = database2.getWritableDatabase();
 
-        /*Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            userId = extras.getLong("id");
+            userId = extras.getInt("id");
         }
         // если 0, то добавление
         if (userId > 0) {
-            // получаем элемент по id из бд
-            userCursor = db.rawQuery("select * from " + DatabaseHelper.TABLE + " where " +
-                    DatabaseHelper.COLUMN_ID + "=?", new String[]{String.valueOf(userId)});
-            userCursor.moveToFirst();
-            nameBox.setText(userCursor.getString(1));
-            yearBox.setText(String.valueOf(userCursor.getInt(2)));
-            userCursor.close();
+            ra_source = database2.getRA_Source(userId);
         } else {
             // скрываем кнопку удаления
             delButton.setVisibility(View.GONE);
-        }*/
-    }
-
-    /*public void save(View view) {
-        ContentValues cv = new ContentValues();
-        cv.put(DatabaseHelper.COLUMN_NAME, nameBox.getText().toString());
-        cv.put(DatabaseHelper.COLUMN_T_POL, Integer.parseInt(yearBox.getText().toString()));
-
-        if (userId > 0) {
-            db.update(DatabaseHelper.TABLE, cv, DatabaseHelper.COLUMN_ID + "=" + String.valueOf(userId), null);
-        } else {
-            db.insert(DatabaseHelper.TABLE, null, cv);
         }
-        goHome();
-    }*/
 
-    /*public void delete(View view) {
-        db.delete(DatabaseHelper.TABLE, "_id = ?", new String[]{String.valueOf(userId)});
-        goHome();
-    }*/
+        Log.e(TAG, "USER_ID: " + userId);
+        ra_source = database2.getRA_Source(userId);
+        setTextViewByRa_source();
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.saveButton:
+                            setRa_sourceByTextView();
+                            database2.updateRA_Source(ra_source);
+                            goHome();
+                        break;
+                    case R.id.deleteButton:
+                    break;
+
+                }
+            }
+        };
+
+        saveButton.setOnClickListener(listener);
+    }
 
     private void goHome() {
         // закрываем подключение
@@ -81,6 +91,27 @@ public class SourceSettingActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+    }
+
+    private void setRa_sourceByTextView() {
+        ra_source.setName(nameBox.getText().toString());
+        ra_source.setElement(elementBox.getText().toString());
+        ra_source.setA0(Double.parseDouble(a0Box.getText().toString()));
+        ra_source.setHalfLife(Double.parseDouble(halfLifeBox.getText().toString()));
+        ra_source.setYear(Integer.parseInt(yearBox.getText().toString()));
+        ra_source.setMonth(Integer.parseInt(monthBox.getText().toString()));
+        ra_source.setDay(Integer.parseInt(dayBox.getText().toString()));
+
+    }
+
+    private void setTextViewByRa_source() {
+        nameBox.setText(ra_source.getName());
+        elementBox.setText(ra_source.getElement());
+        a0Box.setText(String.valueOf(ra_source.getA0()));
+        halfLifeBox.setText(String.valueOf(ra_source.getHalfLife()));
+        yearBox.setText(String.valueOf(ra_source.getYear()));
+        monthBox.setText(String.valueOf(ra_source.getMonth()));
+        dayBox.setText(String.valueOf(ra_source.getDay()));
     }
 
 }

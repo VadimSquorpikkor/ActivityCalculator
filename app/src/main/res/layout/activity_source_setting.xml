@@ -8,12 +8,44 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите имя"/>
+        android:hint="№516"
+        android:text="№516"/>
+    <EditText
+        android:id="@+id/element"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cs-137"
+        android:text="Cs-137"/>
+    <EditText
+        android:id="@+id/a0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="90"
+        android:text="90"/>
+    <EditText
+        android:id="@+id/half_life"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="30.17"
+        android:text="30.17"/>
     <EditText
         android:id="@+id/year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите год рождения"/>
+        android:hint="2016"
+        android:text="2016"/>
+    <EditText
+        android:id="@+id/month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="10"
+        android:text="10"/>
+    <EditText
+        android:id="@+id/day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="17"
+        android:text="17"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
