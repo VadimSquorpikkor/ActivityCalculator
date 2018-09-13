@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         //////////////database2.addRA_Source(new RA_Source());
 
-        sourceList.addAll(database2.getAllRA_Sources());//этот
+        //sourceList.addAll(database2.getAllRA_Sources());//этот
 
         // находим список
         lvMain = findViewById(R.id.lvMain);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.source_list_item, sourceList);
 
         // присваиваем адаптер списку
-        lvMain.setAdapter(sourceAdapter);
+        //lvMain.setAdapter(sourceAdapter);
 
         //Лисенер для элемента ListView
         lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        sourceList.clear();
+        sourceList.addAll(database2.getAllRA_Sources());
+        lvMain.setAdapter(sourceAdapter);
 
     }
 

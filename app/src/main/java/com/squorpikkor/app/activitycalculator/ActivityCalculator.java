@@ -9,14 +9,14 @@ import java.util.GregorianCalendar;
 
 class ActivityCalculator {
 
-    private double CS137_TPOL = 365.25 * 30.17;
+    private double CS137_TPOL = 30.17;
 
     double getActivity(double a0, double t_pol) {
-        return a0 * Math.exp(-0.693 / t_pol * days_left());
+        return a0 * Math.exp(-0.693 / (t_pol*365.25) * days_left());
     }
 
     double getActivity(double a0, double t_pol, int year, int month, int day) {
-        return a0 * Math.exp(-0.693 / t_pol * days_left(year, month, day));
+        return a0 * Math.exp(-0.693 / (t_pol*365.25) * days_left(year, month, day));
     }
 
     double get_cs137_activity(double a0, double days_left) {

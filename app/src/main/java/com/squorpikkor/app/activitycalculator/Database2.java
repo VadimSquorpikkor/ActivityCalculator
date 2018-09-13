@@ -133,12 +133,18 @@ public class Database2 extends SQLiteOpenHelper{
         return sourceList;
     }
 
+    //TODO сделать void?
     public int updateRA_Source(RA_Source ra_source) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, ra_source.getName());
         values.put(COLUMN_ELEMENT, ra_source.getElement());
+        values.put(COLUMN_A0, ra_source.getA0());
+        values.put(COLUMN_HALF_LIFE, ra_source.getHalfLife());
+        values.put(COLUMN_YEAR, ra_source.getYear());
+        values.put(COLUMN_MONTH, ra_source.getMonth());
+        values.put(COLUMN_DAY, ra_source.getDay());
 
         return db.update(TABLE_SOURCES, values, COLUMN_ID + " = ?",
                 new String[] { String.valueOf(ra_source.getID()) });
