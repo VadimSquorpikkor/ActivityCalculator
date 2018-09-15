@@ -1,5 +1,6 @@
 package com.squorpikkor.app.activitycalculator;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -16,16 +17,18 @@ public class  SourceAdapter extends ArrayAdapter<RA_Source> {
     private int layout;
     private List<RA_Source> sourceList;
 
-    public SourceAdapter(Context context, int resource, List<RA_Source> states) {
-        super(context, resource, states);
-        this.sourceList = states;
+    SourceAdapter(Context context, int resource, List<RA_Source> sourceList) {
+        super(context, resource, sourceList);
+        this.sourceList = sourceList;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
     }
 
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @NonNull
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
+        @SuppressLint("ViewHolder")
         View view = inflater.inflate(this.layout, parent, false);
 
         TextView nameView = view.findViewById(R.id.name);
@@ -35,7 +38,8 @@ public class  SourceAdapter extends ArrayAdapter<RA_Source> {
         RA_Source state = sourceList.get(position);
 
         nameView.setText(state.getName());
-        activityView.setText(String.valueOf(state.getActivity()));
+        activityView.setText(String.format("%.5f" , state.getActivity()) + " кБк");
+        //activityView.setText(String.valueOf(state.getActivity()));
         elementView.setText(state.getElement());
 
         return view;

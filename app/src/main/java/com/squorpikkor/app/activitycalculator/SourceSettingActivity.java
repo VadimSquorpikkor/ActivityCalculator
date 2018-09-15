@@ -1,5 +1,8 @@
 package com.squorpikkor.app.activitycalculator;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SourceSettingActivity extends AppCompatActivity {
 
@@ -21,8 +25,8 @@ public class SourceSettingActivity extends AppCompatActivity {
     EditText monthBox;
     EditText dayBox;
 
-    Button delButton;
     Button saveButton;
+    Button deleteButton;
 
     Database2 database2;
     SQLiteDatabase db;
@@ -30,10 +34,15 @@ public class SourceSettingActivity extends AppCompatActivity {
 
     RA_Source ra_source;
 
+    AlertDialog.Builder ad;
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_source_setting);
+
+        context = SourceSettingActivity.this;
 
         nameBox = findViewById(R.id.name);
         elementBox = findViewById(R.id.element);
@@ -43,8 +52,8 @@ public class SourceSettingActivity extends AppCompatActivity {
         monthBox = findViewById(R.id.month);
         dayBox = findViewById(R.id.day);
 
-        delButton = findViewById(R.id.deleteButton);
         saveButton = findViewById(R.id.saveButton);
+        deleteButton = findViewById(R.id.deleteButton);
 
         database2 = new Database2(this);
         db = database2.getWritableDatabase();
@@ -58,7 +67,7 @@ public class SourceSettingActivity extends AppCompatActivity {
             ra_source = database2.getRA_Source(userId);
         } else {
             // скрываем кнопку удаления
-            delButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.GONE);
         }
 
         Log.e(TAG, "USER_ID: " + userId);
@@ -75,17 +84,39 @@ public class SourceSettingActivity extends AppCompatActivity {
                         goHome();
                         break;
                     case R.id.deleteButton:
-                        Log.e("LOGG!!", "delete!!!");
-                        database2.deleteRA_Source(ra_source);
-                        goHome();
+                        ad.show();
                         break;
-
                 }
             }
         };
 
         saveButton.setOnClickListener(listener);
-        delButton.setOnClickListener(listener);
+        deleteButton.setOnClickListener(listener);
+
+        ad = new AlertDialog.Builder(context);
+        ad.setTitle("Текущий источник будет удален");  // заголовок
+        ad.setMessage("Продолжить?"); // сообщение
+        ad.setPositiveButton("Гори оно огнём", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Toast.makeText(context, "Усточник удален",
+                        Toast.LENGTH_LONG).show();
+                database2.deleteRA_Source(ra_source);
+                goHome();
+            }
+        });
+        ad.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                //Toast.makeText(context, "Возможно вы правы", Toast.LENGTH_LONG)
+                  //      .show();
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(context, "Вы ничего не выбрали",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void goHome() {
@@ -117,6 +148,9 @@ public class SourceSettingActivity extends AppCompatActivity {
         monthBox.setText(String.valueOf(ra_source.getMonth()));
         dayBox.setText(String.valueOf(ra_source.getDay()));
     }
+
+
+
 
 }
 

@@ -5,23 +5,22 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Database2 extends SQLiteOpenHelper{
+public class Database2 extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "sourceManager";
-    public static final String TABLE_SOURCES = "ra_sources";
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_ELEMENT = "element";
-    public static final String COLUMN_A0 = "a0";
-    public static final String COLUMN_HALF_LIFE = "half_life";
-    public static final String COLUMN_YEAR = "year";
-    public static final String COLUMN_MONTH = "month";
-    public static final String COLUMN_DAY = "day";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "sourceManager";
+    private static final String TABLE_SOURCES = "ra_sources";
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_NAME = "name";
+    private static final String COLUMN_ELEMENT = "element";
+    private static final String COLUMN_A0 = "a0";
+    private static final String COLUMN_HALF_LIFE = "half_life";
+    private static final String COLUMN_YEAR = "year";
+    private static final String COLUMN_MONTH = "month";
+    private static final String COLUMN_DAY = "day";
 
     //По поводу ID: при создании нового RA_Source ID у него ещё нет, как только создается
     //экземпляр класса, он сразу же заносится в БД. ID объекта ещё нет, в базе ID уже есть
@@ -31,7 +30,7 @@ public class Database2 extends SQLiteOpenHelper{
     //созданный объект класса появляется в активити как элемент списка. При этом в момент загрузки
     //из БД методом getAll объект получает свой ID. Voila
 
-    public Database2(Context context) {
+    Database2(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -55,8 +54,8 @@ public class Database2 extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    //TODO убрать ненужный параметр метода
-    public void addRA_Source(RA_Source ra_source) {
+    public void addRA_Source() {
+//    public void addRA_Source(RA_Source ra_source) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, "Source");
@@ -73,7 +72,7 @@ public class Database2 extends SQLiteOpenHelper{
     public RA_Source getRA_Source(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_SOURCES, new String[] {COLUMN_ID,
+        Cursor cursor = db.query(TABLE_SOURCES, new String[]{COLUMN_ID,
                         COLUMN_NAME,
                         COLUMN_ELEMENT,
                         COLUMN_A0,
@@ -82,10 +81,10 @@ public class Database2 extends SQLiteOpenHelper{
                         COLUMN_MONTH,
                         COLUMN_DAY
                 }, COLUMN_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+                new String[]{String.valueOf(id)}, null, null, null, null);
 
         RA_Source ra_source = new RA_Source();
-        if (cursor != null){
+        if (cursor != null) {
             cursor.moveToFirst();
 
             ra_source.setID(Integer.parseInt(cursor.getString(0)));
@@ -98,12 +97,9 @@ public class Database2 extends SQLiteOpenHelper{
             ra_source.setDay(Integer.parseInt(cursor.getString(7)));
         }
 
-        /*RA_Source ra_source = new RA_Source(Integer.parseInt(
-                cursor.getString(0)),
-                cursor.getString(1),
-                cursor.getString(2));*/
-
-
+        if (cursor != null) {
+            cursor.close();
+        }
 
         return ra_source;
     }
@@ -130,10 +126,13 @@ public class Database2 extends SQLiteOpenHelper{
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
+
         return sourceList;
     }
 
     //TODO сделать void?
+    @SuppressWarnings("UnusedReturnValue")
     public int updateRA_Source(RA_Source ra_source) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -147,21 +146,23 @@ public class Database2 extends SQLiteOpenHelper{
         values.put(COLUMN_DAY, ra_source.getDay());
 
         return db.update(TABLE_SOURCES, values, COLUMN_ID + " = ?",
-                new String[] { String.valueOf(ra_source.getID()) });
+                new String[]{String.valueOf(ra_source.getID())});
     }
 
     public void deleteRA_Source(RA_Source ra_source) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SOURCES, COLUMN_ID + " = ?", new String[] { String.valueOf(ra_source.getID()) });
+        db.delete(TABLE_SOURCES, COLUMN_ID + " = ?", new String[]{String.valueOf(ra_source.getID())});
         db.close();
     }
 
+    @SuppressWarnings("unused")
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SOURCES, null, null);
         db.close();
     }
 
+    @SuppressWarnings("unused")
     public int getRA_SourceCount() {
         String countQuery = "SELECT  * FROM " + TABLE_SOURCES;
         SQLiteDatabase db = this.getReadableDatabase();
