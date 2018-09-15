@@ -30,11 +30,13 @@ public class  SourceAdapter extends ArrayAdapter<RA_Source> {
 
         TextView nameView = view.findViewById(R.id.name);
         TextView activityView = view.findViewById(R.id.activity);
+        TextView elementView = view.findViewById(R.id.element);
 
         RA_Source state = sourceList.get(position);
 
         nameView.setText(state.getName());
         activityView.setText(String.valueOf(state.getActivity()));
+        elementView.setText(state.getElement());
 
         return view;
     }

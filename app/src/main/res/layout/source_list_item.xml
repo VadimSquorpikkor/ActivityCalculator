@@ -6,19 +6,34 @@
     android:orientation="horizontal"
     >
 
-    <TextView
-        android:id="@+id/name"
-        android:textColor="@android:color/holo_orange_light"
-        android:textSize="26sp"
-        android:padding="16dp"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="НомерИсточника" />
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/element"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Элемент" />
+        <TextView
+            android:id="@+id/name"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="26sp"
+            android:paddingLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ИмяИсточника" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/activity"
-        android:padding="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="18dp"
+        android:textSize="22dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="АктивностьИсточника" />
+        android:text="Активность" />
 </LinearLayout>

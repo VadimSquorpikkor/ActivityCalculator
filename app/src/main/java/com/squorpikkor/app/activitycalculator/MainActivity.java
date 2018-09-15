@@ -75,6 +75,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*lvMain.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), SourceSettingActivity.class);
+//                intent.putExtra("id", id);
+                int pos = sourceList.get((int)id).getID();
+                intent.putExtra("id", pos);
+                startActivity(intent);
+                return true;
+            }
+        });*/
+
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

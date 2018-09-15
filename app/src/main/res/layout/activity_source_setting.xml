@@ -4,42 +4,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Название источника"/>
+
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="№516"
         android:text="№516"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Химический элемент"/>
     <EditText
         android:id="@+id/element"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Cs-137"
         android:text="Cs-137"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Активность в день поверки"/>
     <EditText
         android:id="@+id/a0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="90"
         android:text="90"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Период полураспада (лет)"/>
     <EditText
         android:id="@+id/half_life"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="30.17"
         android:text="30.17"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Поверка (год)"/>
     <EditText
         android:id="@+id/year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="2016"
         android:text="2016"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Поверка (месяц)"/>
     <EditText
         android:id="@+id/month"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="10"
         android:text="10"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Поверка (день)"/>
     <EditText
         android:id="@+id/day"
         android:layout_width="match_parent"
@@ -56,14 +85,12 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Сохранить"
-            android:onClick="save"/>
+            android:text="Сохранить"/>
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Удалить"
-            android:onClick="delete"/>
+            android:text="Удалить"/>
     </LinearLayout>
 </LinearLayout>

@@ -70,18 +70,22 @@ public class SourceSettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.saveButton:
-                            setRa_sourceByTextView();
-                            database2.updateRA_Source(ra_source);
-                            goHome();
+                        setRa_sourceByTextView();
+                        database2.updateRA_Source(ra_source);
+                        goHome();
                         break;
                     case R.id.deleteButton:
-                    break;
+                        Log.e("LOGG!!", "delete!!!");
+                        database2.deleteRA_Source(ra_source);
+                        goHome();
+                        break;
 
                 }
             }
         };
 
         saveButton.setOnClickListener(listener);
+        delButton.setOnClickListener(listener);
     }
 
     private void goHome() {
